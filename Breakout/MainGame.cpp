@@ -7,7 +7,6 @@ void MainGameEntry( PLAY_IGNORE_COMMAND_LINE )
 	Play::CentreAllSpriteOrigins();
 	SetupScene();
 	SpawnBall();
-	
 }
 
 // Called by PlayBuffer every frame (60 times a second!)

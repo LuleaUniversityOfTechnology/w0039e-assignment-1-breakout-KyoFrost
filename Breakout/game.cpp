@@ -3,6 +3,8 @@
 #include "Play.h"
 #include "game.h"
 
+Paddle paddle;
+
 void SpawnBall()
 {
 	const int objectId = Play::CreateGameObject(ObjectType::TYPE_BALL, { DISPLAY_WIDTH / 2, 60 }, 4, "ball");
@@ -23,6 +25,10 @@ void SetupScene()
 			const int objectId = Play::CreateGameObject(ObjectType::TYPE_BRICK, { xPos, yPos }, 6, "brick");
 		}
 	}
+
+	// Center paddle
+	paddle.position.x = DISPLAY_WIDTH / 2;
+	paddle.position.y = 60 - BALL_SIZE / 2 - PADDLE_HEIGHT / 2;
 }
 
 void StepFrame(float elapsedTime)
@@ -52,8 +58,8 @@ void StepFrame(float elapsedTime)
 			ball.velocity.y = abs(ball.velocity.y); // Move up
 			ball.pos.y = 0;
 		}
+
 		Play::UpdateGameObject(ball);
-	
 		Play::DrawObject(ball);
 	}
 
@@ -75,5 +81,16 @@ void StepFrame(float elapsedTime)
 			}
 		}
 	}
-}
 
+
+	for (const int& ballId : ballIds)
+	{
+		Play::GameObject& ball = Play::GetGameObject(ballId);
+		if (IsColliding(paddle, ball))
+		{
+			ball.velocity.y *= -1;
+		}
+	}
+	UpdatePaddle(paddle, elapsedTime);
+	DrawPaddle(paddle);
+}
