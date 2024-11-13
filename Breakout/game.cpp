@@ -91,9 +91,9 @@ void StepFrame(float elapsedTime)
 		{
 			ball.velocity.y *= -1;
 
-			// Get distance between ball and paddle center
+			// Give ball sideway direction based on where it hits the paddle
 			float distance = ball.pos.x - paddle.position.x;
-			float bounceDirection = (distance / (PADDLE_WIDTH / 2.0)) * 1.5f;
+			float bounceDirection = (distance / (PADDLE_WIDTH / 2.0f)) * 1.5f;
 			ball.velocity.x = bounceDirection;
 		}
 	}
