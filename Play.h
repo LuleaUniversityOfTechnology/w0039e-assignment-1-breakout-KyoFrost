@@ -2148,7 +2148,7 @@ namespace Play
 	//! @brief The Gameobject struct. Holds all the data that a GameObject requires, and can be extended by the user.
 	struct GameObject
 	{
-		//! @brief GameObject constructor.
+		//! @brief GameObject constructor.pos
 		//! @param type The type of the GameObject.
 		//! @param pos The initial x/y coordinates of the GameObject.
 		//! @param collisionRadius The radius of the collision circle of this GameObject.
