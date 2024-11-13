@@ -4,13 +4,23 @@
 
 void UpdatePaddle(Paddle& paddle, float elapsedTime)
 {
-	if (Play::KeyDown(Play::KEY_LEFT))
+	if (Play::KeyDown(Play::KEY_LEFT) || Play::KeyDown(Play::KEY_A))
 	{
 		paddle.position.x -= PADDLE_SPEED * elapsedTime;
 	}
-	if (Play::KeyDown(Play::KEY_RIGHT))
+	if (Play::KeyDown(Play::KEY_RIGHT) || Play::KeyDown(Play::KEY_D))
 	{
 		paddle.position.x += PADDLE_SPEED * elapsedTime;
+	}
+
+	// Keep inside screen
+	if (paddle.position.x + PADDLE_WIDTH / 2 > DISPLAY_WIDTH)
+	{
+		paddle.position.x = DISPLAY_WIDTH - PADDLE_WIDTH / 2;
+	}
+	else if (paddle.position.x - PADDLE_WIDTH / 2 < 0)
+	{
+		paddle.position.x = PADDLE_WIDTH / 2;
 	}
 }
 
