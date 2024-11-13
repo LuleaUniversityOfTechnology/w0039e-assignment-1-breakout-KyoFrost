@@ -9,7 +9,8 @@ void SpawnBall()
 {
 	const int objectId = Play::CreateGameObject(ObjectType::TYPE_BALL, { DISPLAY_WIDTH / 2, 60 }, 4, "ball");
 	GameObject& ball = Play::GetGameObject(objectId);
-	ball.velocity = normalize({ 1, 1 }) * BALL_SPEED;
+	float direction = static_cast<float>(RandomRoll(20) - 10) / 10.0f;
+	ball.velocity = normalize({ direction, 1.0f }) * BALL_SPEED;
 }
 
 void SetupScene()
@@ -22,7 +23,7 @@ void SetupScene()
 		{
 			int xPos = x * (BRICK_WIDTH + BRICK_SPACING) + startX;
 			int yPos = y * (BRICK_HEIGHT + BRICK_SPACING) + startY;
-			const int objectId = Play::CreateGameObject(ObjectType::TYPE_BRICK, { xPos, yPos }, 6, "brick");
+			Play::CreateGameObject(ObjectType::TYPE_BRICK, { xPos, yPos }, 6, "brick");
 		}
 	}
 
@@ -89,6 +90,11 @@ void StepFrame(float elapsedTime)
 		if (IsColliding(paddle, ball))
 		{
 			ball.velocity.y *= -1;
+
+			// Get distance between ball and paddle center
+			float distance = ball.pos.x - paddle.position.x;
+			float bounceDirection = (distance / (PADDLE_WIDTH / 2.0)) * 1.5f;
+			ball.velocity.x = bounceDirection;
 		}
 	}
 	UpdatePaddle(paddle, elapsedTime);
